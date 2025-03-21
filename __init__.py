@@ -13,7 +13,7 @@ class LightSkill(OVOSSkill):
 
     def handle_play_light(self, message: Message):
         #url = f"http://192.168.1.45/api/manager/logic/webhook/Terre/?tag=Light"
-        url = f"http://192.168.1.199/api/manager/logic/webhook/Demo/?tag=Light"
+        url = f"http://192.168.1.187/api/manager/logic/webhook/Demo/?tag=Light"
         data = requests.get(url)
         print(data.json())
         self.speak_dialog("PlayLight")
