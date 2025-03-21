@@ -12,7 +12,8 @@ class LightSkill(OVOSSkill):
         self.register_intent_file('PlayLight.intent', self.handle_play_light)
 
     def handle_play_light(self, message: Message):
-        url = f"http://192.168.1.45/api/manager/logic/webhook/Terre/?tag=Light"
+        #url = f"http://192.168.1.45/api/manager/logic/webhook/Terre/?tag=Light"
+        url = f"http://192.168.1.199/api/manager/logic/webhook/Demo/?tag=Light"
         data = requests.get(url)
         print(data.json())
         self.speak_dialog("PlayLight")
