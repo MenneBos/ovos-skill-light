@@ -18,7 +18,8 @@ class LightSkill(OVOSSkill):
             self.speak_dialog('PlayLight',
                               {'room': room_type})
         else:
-            self.speak_dialog('PlayLight')
+            self.speak_dialog('Whichlight')
+            room_type = "none"
         #url = f"http://192.168.1.45/api/manager/logic/webhook/Terre/?tag=Light"
         url = f"http://192.168.1.187/api/manager/logic/webhook/Demo/?tag="+room_type
         data = requests.get(url)
