@@ -20,7 +20,9 @@ class LightSkill(OVOSSkill):
             action_type = "on"
         if action_type is "dark":
             action_type = "off"
-        if room_type is "hang" or "central":
+        if room_type is "hang":
+            room_type = "main"
+        if room_type is "central":
             room_type = "main"
         if room_type is "led":
             room_type = "strip"
