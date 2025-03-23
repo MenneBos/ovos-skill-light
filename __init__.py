@@ -26,6 +26,10 @@ class LightSkill(OVOSSkill):
             room_type = "main"
         if room_type is "led":
             room_type = "strip"
+        if action_type is None:
+            action_type = "none"
+        if room_type is None:
+            room_type = "none"
 
         self.speak_dialog('LightOffOn',
                             {'room': room_type, 'action': action_type})
