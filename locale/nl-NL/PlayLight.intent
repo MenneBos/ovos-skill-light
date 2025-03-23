@@ -1,6 +1,6 @@
-kan je het {room}(verlichting|licht|lamp) (aandoen|uitdoen)
-{room}(verlichting|licht|lamp) (aan|uit)   
-schakel het {room} (verlichting|licht|lamp) (aan|uit)
-zet {room} (verlichting|licht|lamp) (aan|uit)
-zet het {room} (verlichting|licht|lamp) (aan|uit)
-doe het {room} (verlichting|licht|lamp) (aan|uit)
+kan je het {room}(verlichting|licht|lamp) {action} doen
+{room}(verlichting|licht|lamp) {action}  
+schakel het {room} (verlichting|licht|lamp) {action}
+zet {room} (verlichting|licht|lamp) {action}
+zet het {room} (verlichting|licht|lamp) {action}
+doe het {room} (verlichting|licht|lamp) {action}

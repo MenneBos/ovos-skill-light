@@ -1,6 +1,6 @@
-turn ( | on | off) the {room} light
-switch the {room} light ( | on | off)
-turn the {room} light ( | on | off)
-give me {room} light
-make it ( dark | light ) in the {room}
-lights (on| off) in the {room}
+turn {action} the {room} light
+switch the {room} light {action}
+turn the {room} light {action}
+{action} me {room} light
+make it {action} in the {room}
+lights {action} in the {room}

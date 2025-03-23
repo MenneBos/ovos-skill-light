@@ -11,17 +11,25 @@ class LightSkill(OVOSSkill):
         self.add_event('mycroft.light.play', self.handle_play_light)
         self.register_intent_file('PlayLight.intent', self.handle_play_light)
         self.register_entity_file('room.entity')
+        self.register_entity_file('action.entity')
 
     def handle_play_light(self, message: Message):
         room_type = message.data.get('room')
-        if room_type is not None:
-            self.speak_dialog('PlayLight',
-                              {'room': room_type})
-        else:
-            self.speak_dialog('Whichlight')
-            room_type = "none"
+        action_type = message.data.get('action')
+        if action_type is "give":
+            action_type = "on"
+        if action_type is "dark":
+            action_type = "off"
+        if room_type is "hang" or "central":
+            room_type = "main"
+        if room_type is "led":
+            room_type = "strip"
+
+        self.speak_dialog('LightOffOn',
+                            {'room': room_type, 'action': action_type})
+
         #url = f"http://192.168.1.45/api/manager/logic/webhook/Terre/?tag=Light"
-        url = f"http://192.168.1.187/api/manager/logic/webhook/Demo/?tag="+room_type
+        url = f"http://192.168.1.187/api/manager/logic/webhook/Demo/?tag=Light"+room_type+action_type
         data = requests.get(url)
         print(data.json())
         # self.play_audio("/home/ovos/.venvs/ovos/lib/python3.11/site-packages/skill_ovos_melody/soundbytes/As_You_Wish.mp3", False) 
