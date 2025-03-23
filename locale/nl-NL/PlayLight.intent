@@ -1,6 +1,5 @@
-kan je het {room}(verlichting|licht|lamp) {action} doen
-{room}(verlichting|licht|lamp) {action}  
-schakel het {room} (verlichting|licht|lamp) {action}
-zet {room} (verlichting|licht|lamp) {action}
-zet het {room} (verlichting|licht|lamp) {action}
-doe het {room} (verlichting|licht|lamp) {action}
+kan je {room} (verlichting | licht | lamp) {action} doen
+{room} (verlichting | licht | lamp) {action}  
+schakel {room} (verlichting | licht | lamp) {action}
+zet {room} (verlichting | licht | lamp) {action}
+doe {room} (verlichting | licht | lamp) {action}
