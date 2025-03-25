@@ -16,6 +16,7 @@ class LightSkill(OVOSSkill):
     def handle_play_light(self, message: Message):
         room_type = message.data.get('room')
         action_type = message.data.get('action')
+        device_type = message.data.get('device')
         if action_type is "give":
             action_type = "on"
         if action_type is "dark":
@@ -32,7 +33,7 @@ class LightSkill(OVOSSkill):
             room_type = " "
 
         self.speak_dialog('LightOffOn',
-                            {'room': room_type, 'action': action_type})
+                            {'room': room_type, 'device': device_type, 'action': action_type})
 
         #url = f"http://192.168.1.45/api/manager/logic/webhook/Terre/?tag=Light"
         url = f"http://192.168.1.187/api/manager/logic/webhook/Demo/?tag=Light"+room_type+action_type
