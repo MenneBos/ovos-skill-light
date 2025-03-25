@@ -39,14 +39,14 @@ class LightSkill(OVOSSkill):
             if device_type in ("lampen", "lichten"):	
                 room_type = "alle"
                 lid_type = " "
-            if device_type in ("verlichting"):	
+            elif device_type in ("verlichting"):	
                 room_type = " "
                 lid_type = "de"
-            if device_type in ("licht"):
+            elif device_type in ("licht"):
                 room_type = "alle"
                 device_type = "lichten"
                 lid_type = " "
-            if device_type in ("lamp"):
+            elif device_type in ("lamp"):
                 room_type = "alle"
                 device_type = "lampen"
                 lid_type = " "
@@ -56,7 +56,7 @@ class LightSkill(OVOSSkill):
             expression_type = " "
 
         self.speak_dialog('LightOffOn',
-                            {'lid': lid_type, 'room': room_type, 'device': device_type, 'action': action_type, expression_type:'expression_type'})
+                            {'lid': lid_type, 'room': room_type, 'device': device_type, 'action': action_type, 'expression':expression_type})
         
         #url = f"http://192.168.1.45/api/manager/logic/webhook/Terre/?tag=Light"
         url = f"http://192.168.1.187/api/manager/logic/webhook/Demo/?tag=Light"+room_type+action_type
