@@ -17,6 +17,8 @@ class LightSkill(OVOSSkill):
         room_type = message.data.get('room')
         action_type = message.data.get('action')
         device_type = message.data.get('device')
+        expression_type = "gedaan"
+        
         if action_type is "give":
             action_type = "on"
         if action_type is "dark":
@@ -27,16 +29,38 @@ class LightSkill(OVOSSkill):
             room_type = "main"
         if room_type is "led":
             room_type = "strip"
-        if room_type is None:    # if no room is given apply to all lights
-            room_type = "none"
 
-        if action_type is None:  # if no action is given apply toggle
-            action_type = "none"
-
-        if device_type in ("lamp", "lampen", "lcihten", "verlichting"):
+        if device_type in ("lamp", "lampen", "lichten", "verlichting"):
             lid_type = "de"
         if device_type in ("licht"):
             lid_type = "het"
+
+        if room_type is None:    # if no room is given apply to all lights
+            if device_type in ("lampen", "lichten"):	
+                room_type = "alle"
+                lid_type = " "
+                expression_type = "gedaan"
+            if device_type in ("verlichting"):	
+                room_type = " "
+                lid_type = "de"
+                expression_type = "gedaan"
+            if device_type in ("licht"):
+                room_type = "alle"
+                device_type = "lichten"
+                lid_type = " "
+                expression_type = "gedaan"
+            if device_type in ("lamp"):
+                room_type = "alle"
+                device_type = "lampen"
+                lid_type = " "
+                expression_type = "gedaan"
+
+ 
+        if action_type is None:  # if no action is given apply toggle
+            action_type = "aangedaan"
+            expression_type = " "
+
+
 
         self.speak_dialog('LightOffOn',
                             {'lid': lid_type, 'room': room_type, 'device': device_type, 'action': action_type})
