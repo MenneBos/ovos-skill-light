@@ -1,5 +1,7 @@
 kan je {room} {device} {action} doen
 {room} {device} {action}  
+{device} {action}
+{room} {device}
 schakel {room} {device} {action}
 zet {room} {device} {action}
 doe {room} {device} {action}

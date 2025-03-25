@@ -30,10 +30,8 @@ class LightSkill(OVOSSkill):
         if room_type is None:
             room_type = " "
 
-        if action_type is " ":
-            action_type = "toggle"
         if action_type is None:
-            action_type = "toggle"
+            action_type = " "
 
         if device_type in ("lamp", "lampen", "lcihten", "verlichting"):
             lid_type = "de"
