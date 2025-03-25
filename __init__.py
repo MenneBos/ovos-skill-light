@@ -49,7 +49,7 @@ class LightSkill(OVOSSkill):
                 lid_type = " "
  
 
-        if not action_type in ("aan", "uit"):  # if no action is given apply toggle flow
+        if action_type is None:  # if no action is given apply toggle flow
             action_type = "aangepast"
             expression_type = " "
 
