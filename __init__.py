@@ -35,7 +35,7 @@ class LightSkill(OVOSSkill):
         if device_type in ("licht"):
             lid_type = "het"
 
-        if not room_type in ("slaapkamer", "eetkamer", "woonkamer"):  # if no room is given apply to all lights
+        if room_type is None:  # if no room is given apply to all lights
             if device_type in ("lampen", "lichten"):	
                 room_type = "alle"
                 lid_type = " "
