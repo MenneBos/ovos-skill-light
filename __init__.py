@@ -39,10 +39,7 @@ class LightSkill(OVOSSkill):
             if device_type in ("lampen", "lichten"):	
                 room_type = "alle"
                 lid_type = " "
-            elif device_type in ("verlichting"):	
-                room_type = " "
-                lid_type = "de"
-            elif device_type in ("licht"):
+            elif device_type in ("licht", "verlichting"):
                 room_type = "alle"
                 device_type = "lichten"
                 lid_type = " "
