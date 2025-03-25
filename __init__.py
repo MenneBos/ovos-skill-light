@@ -27,11 +27,11 @@ class LightSkill(OVOSSkill):
             room_type = "main"
         if room_type is "led":
             room_type = "strip"
-        if room_type is None:
-            room_type = " "
+        if room_type is None:    # if no room is given apply to all lights
+            room_type = "none"
 
-        if action_type is None:
-            action_type = " "
+        if action_type is None:  # if no action is given apply toggle
+            action_type = "none"
 
         if device_type in ("lamp", "lampen", "lcihten", "verlichting"):
             lid_type = "de"
