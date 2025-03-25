@@ -35,23 +35,20 @@ class LightSkill(OVOSSkill):
         if device_type in ("licht"):
             lid_type = "het"
 
-        if room_type in ("slaapkamer", "eetkamer", "woonkamer"):  # if no room is given apply to all lights
-            room_type = room_type           
-        elif device_type in ("lampen", "lichten"):	
-            room_type = "alle"
-            lid_type = " "
-        elif device_type in ("licht", "verlichting"):
-            room_type = "alle"
-            device_type = "lichten"
-            lid_type = " "
-        elif device_type in ("lamp"):
-            room_type = "alle"
-            device_type = "lampen"
-            lid_type = " "
+        if not room_type in ("slaapkamer", "eetkamer", "woonkamer"):  # if no room is given apply to all lights
+            if device_type in ("lampen", "lichten"):	
+                room_type = "alle"
+                lid_type = " "
+            elif device_type in ("licht", "verlichting"):
+                room_type = "alle"
+                device_type = "lichten"
+                lid_type = " "
+            elif device_type in ("lamp"):
+                room_type = "alle"
+                device_type = "lampen"
+                lid_type = " "
  
-        if action_type in ("aan", "uit"):  # if no action is given apply toggle
-            action_type = action_type
-        else:
+        if not action_type in ("aan", "uit"):  # if no action is given apply toggle
             action_type = "aangepast"
             expression_type = " "
 
