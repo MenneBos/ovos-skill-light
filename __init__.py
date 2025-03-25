@@ -35,7 +35,7 @@ class LightSkill(OVOSSkill):
         if device_type in ("licht"):
             lid_type = "het"
 
-        if room_type is "":  # if no room is given apply to all lights
+        if room_type is " ":  # if no room is given apply to all lights
             if device_type in ("lampen", "lichten"):	
                 room_type = "alle"
                 lid_type = " "
@@ -49,7 +49,7 @@ class LightSkill(OVOSSkill):
                 lid_type = " "
  
 
-        if action_type is "":  # if no action is given apply toggle flow
+        if action_type is " ":  # if no action is given apply toggle flow
             action_type = "aangepast"
             expression_type = " "
 
