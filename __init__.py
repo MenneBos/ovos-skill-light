@@ -48,7 +48,8 @@ class LightSkill(OVOSSkill):
                 device_type = "lampen"
                 lid_type = " "
  
-        if not action_type in ("aan", "uit"):  # if no action is given apply toggle
+
+        if not action_type in ("aan", "uit"):  # if no action is given apply toggle flow
             action_type = "aangepast"
             expression_type = " "
 
