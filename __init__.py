@@ -60,6 +60,8 @@ class LightSkill(OVOSSkill):
         room_type = message.data.get('room')
         action_type = message.data.get('action')
         device_type = message.data.get('device')
+        LOG.info(f"The room {room_type} and device {device_type} and action {action_type}.")
+
         
         if device_type in ("lamp", "lampen", "lichten", "verlichting"):
             lid_type = "de"
@@ -84,7 +86,7 @@ class LightSkill(OVOSSkill):
 
         url = f"http://192.168.1.187/api/manager/logic/webhook/Demo/?tag=Light"+room_type+action_type
         data = requests.get(url)
-        print(data.json())
+        LOG.info(f"the URL response in json {data}")
 
     #url = f"http://192.168.1.45/api/manager/logic/webhook/Terre/?tag=Light"
 
