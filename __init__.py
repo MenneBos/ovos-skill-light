@@ -69,16 +69,10 @@ class LightSkill(OVOSSkill):
         if room_type is not None and action_type is not None: # switch room light on/off
             self.speak_dialog('RoomLight',
                     {'lid': lid_type, 'room': room_type, 'device': device_type, 'action': action_type})
-            url = f"http://192.168.1.187/api/manager/logic/webhook/Demo/?tag=Light"+room_type+action_type
-            data = requests.get(url)
-            print(data.json())
 
         if room_type is not None and action_type is None:  # action is None so toggle the room light
             self.speak_dialog('ToggleLight',
                     {'lid': lid_type, 'room': room_type, 'device': device_type})
-            url = f"http://192.168.1.187/api/manager/logic/webhook/Demo/?tag=Light"+room_type+"aangepast"
-            data = requests.get(url)
-            print(data.json())
 
         if room_type is None and action_type is not None:  # room is None so switch all lights
             if device_type in ("licht", "verlichting"):
@@ -88,10 +82,10 @@ class LightSkill(OVOSSkill):
             room_type = "alle"
             self.speak_dialog('AllLight',
                 {'room': room_type, 'device': device_type, 'action': action_type})
-            url = f"http://192.168.1.187/api/manager/logic/webhook/Demo/?tag=Light"+room_type+action_type
-            data = requests.get(url)
-            print(data.json())
 
+        url = f"http://192.168.1.187/api/manager/logic/webhook/Demo/?tag=Light"+room_type+action_type
+        data = requests.get(url)
+        print(data.json())
 
     #url = f"http://192.168.1.45/api/manager/logic/webhook/Terre/?tag=Light"
 
