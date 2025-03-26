@@ -1,3 +1,4 @@
 {room} {device} {action}
-{room} {device}
-{device} {action}
+{device} {action} {room}
+{room} {action} {device}
+{device} {room} {action}
