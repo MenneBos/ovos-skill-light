@@ -69,12 +69,10 @@ class LightSkill(OVOSSkill):
         if room_type is not None and action_type is not None: # switch room light on/off
             self.speak_dialog('RoomLight',
                     {'lid': lid_type, 'room': room_type, 'device': device_type, 'action': action_type})
-
-        if room_type is not None and action_type is None:  # action is None so toggle the room light
+        elif room_type is not None:  # action is None so toggle the room light
             self.speak_dialog('ToggleLight',
                     {'lid': lid_type, 'room': room_type, 'device': device_type})
-
-        if room_type is None and action_type is not None:  # room is None so switch all lights
+        elif action_type is not None:  # room is None so switch all lights
             if device_type in ("licht", "verlichting"):
                 device_type = "lichten"
             if device_type in ("lamp"):
