@@ -73,14 +73,14 @@ class LightSkill(OVOSSkill):
             data = requests.get(url)
             print(data.json())
 
-        elif room_type is not None:  # action is None so toggle the room light
+        if room_type is not None and action_type is None:  # action is None so toggle the room light
             self.speak_dialog('ToggleLight',
                     {'lid': lid_type, 'room': room_type, 'device': device_type})
-            url = f"http://192.168.1.187/api/manager/logic/webhook/Demo/?tag=Light"+room_type
+            url = f"http://192.168.1.187/api/manager/logic/webhook/Demo/?tag=Light"+room_type+"aangepast"
             data = requests.get(url)
             print(data.json())
-            
-        elif action_type is not None:  # room is None so switch all lights
+
+        if room_type is None and action_type is not None:  # room is None so switch all lights
             if device_type in ("licht", "verlichting"):
                 device_type = "lichten"
             if device_type in ("lamp"):
