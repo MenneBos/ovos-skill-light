@@ -51,7 +51,7 @@ def get_version():
     
 
 def find_resource_files():
-    resource_base_dirs = ("locale", "soundbytes", "ui", "vocab", "dialog", "intent", "entity", "regex", "skill")
+    resource_base_dirs = ("locale", "soundbytes", "ui", "vocab", "nl-NL", "dialog", "intent", "entity", "regex", "skill")
     base_dir = path.dirname(__file__)
     package_data = ["*.json"]
     for res in resource_base_dirs:
