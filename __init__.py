@@ -36,12 +36,12 @@ class LightSkill(OVOSSkill):
         self.settings.merge(DEFAULT_SETTINGS, new_only=True)
         self.settings_change_callback = self.on_settings_changed
         self.add_event('mycroft.room.play', self.handle_room_light)
-        self.add_event('mycroft.all.play', self.handle_all_light)
-        self.add_event('mycroft.toggle.play', self.handle_toggle_light)
+        #self.add_event('mycroft.all.play', self.handle_all_light)
+        #self.add_event('mycroft.toggle.play', self.handle_toggle_light)
         self.register_entity_file('room.entity')
         self.register_entity_file('action.entity')
         self.register_entity_file('device.entity')
-        self.register_entity_file('lid.entity')
+        #self.register_entity_file('lid.entity')
     
     def on_settings_changed(self):
         """This method is called when the skill settings are changed."""
@@ -66,49 +66,32 @@ class LightSkill(OVOSSkill):
         if device_type in ("licht"):
             lid_type = "het"
 
-        self.speak_dialog('RoomLight',
-                {'lid': lid_type, 'room': room_type, 'device': device_type, 'action': action_type})
-        url = f"http://192.168.1.187/api/manager/logic/webhook/Demo/?tag=Light"+room_type+action_type
-        data = requests.get(url)
-        print(data.json())
+        if room_type is not None and action_type is not None: # switch room light on/off
+            self.speak_dialog('RoomLight',
+                    {'lid': lid_type, 'room': room_type, 'device': device_type, 'action': action_type})
+            url = f"http://192.168.1.187/api/manager/logic/webhook/Demo/?tag=Light"+room_type+action_type
+            data = requests.get(url)
+            print(data.json())
 
-    @intent_handler("AllLight.intent")            
-    def handle_all_light(self, message: Message):
-        action_type = message.data.get('action')
-        device_type = message.data.get('device')
-        room_type = "alle"
-        
-        if device_type in ("licht", "verlichting"):
-            device_type = "lichten"
-            lid_type = "de"
-        if device_type in ("lamp"):
-            device_type = "lampen"
-            lid_type = "de"
-        if device_type in ("licht"):
-            lid_type = "het"
-        
-        self.speak_dialog('AllLight',
-                {'lid': lid_type, 'room': room_type, 'device': device_type, 'action': action_type})
-        url = f"http://192.168.1.187/api/manager/logic/webhook/Demo/?tag=Light"+room_type+action_type
-        data = requests.get(url)
-        print(data.json())
+        elif room_type is not None:  # action is None so toggle the room light
+            self.speak_dialog('ToggleLight',
+                    {'lid': lid_type, 'room': room_type, 'device': device_type})
+            url = f"http://192.168.1.187/api/manager/logic/webhook/Demo/?tag=Light"+room_type
+            data = requests.get(url)
+            print(data.json())
+            
+        elif action_type is not None:  # room is None so switch all lights
+            if device_type in ("licht", "verlichting"):
+                device_type = "lichten"
+            if device_type in ("lamp"):
+                device_type = "lampen"
+            room_type = "alle"
+            self.speak_dialog('AllLight',
+                {'room': room_type, 'device': device_type, 'action': action_type})
+            url = f"http://192.168.1.187/api/manager/logic/webhook/Demo/?tag=Light"+room_type+action_type
+            data = requests.get(url)
+            print(data.json())
 
-    @intent_handler("ToggleLight.intent")      
-    def handle_toggle_light(self, message: Message):
-        room_type = message.data.get('room')
-        device_type = message.data.get('device')
-        action_type = " "
-
-        if device_type in ("lamp", "lampen", "lichten", "verlichting"):
-            lid_type = "de"
-        if device_type in ("licht"):
-            lid_type = "het"
-
-        self.speak_dialog('ToggleLight',
-                {'lid': lid_type, 'room': room_type, 'device': device_type})
-        url = f"http://192.168.1.187/api/manager/logic/webhook/Demo/?tag=Light"+room_type+action_type
-        data = requests.get(url)
-        print(data.json())
 
     #url = f"http://192.168.1.45/api/manager/logic/webhook/Terre/?tag=Light"
 
