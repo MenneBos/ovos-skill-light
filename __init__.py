@@ -58,7 +58,7 @@ class LightSkill(OVOSSkill):
     @intent_handler("RoomLight.intent")
     def handle_room_light(self, message: Message):
         room_type = message.data.get('room', "alle")
-        device_type = message.data.get('device')
+        device_type = message.data.get('device', None)
         action_type = message.data.get('action', "aangepast")
 
         LOG.info(f"The room {room_type} and device {device_type} and action {action_type}.")
