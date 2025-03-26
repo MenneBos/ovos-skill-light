@@ -41,7 +41,6 @@ class LightSkill(OVOSSkill):
         self.register_entity_file('room.entity')
         self.register_entity_file('action.entity')
         self.register_entity_file('device.entity')
-        self.register_entity_file('expression.entity')
         self.register_entity_file('lid.entity')
     
     def on_settings_changed(self):
@@ -61,15 +60,14 @@ class LightSkill(OVOSSkill):
         room_type = message.data.get('room')
         action_type = message.data.get('action')
         device_type = message.data.get('device')
-        expression_type = "gedaan"
         
         if device_type in ("lamp", "lampen", "lichten", "verlichting"):
             lid_type = "de"
         if device_type in ("licht"):
             lid_type = "het"
 
-        self.speak_dialog('LightOffOn',
-                {'lid': lid_type, 'room': room_type, 'device': device_type, 'action': action_type, 'expression':expression_type})
+        self.speak_dialog('RoomLight',
+                {'lid': lid_type, 'room': room_type, 'device': device_type, 'action': action_type})
         url = f"http://192.168.1.187/api/manager/logic/webhook/Demo/?tag=Light"+room_type+action_type
         data = requests.get(url)
         print(data.json())
@@ -78,7 +76,6 @@ class LightSkill(OVOSSkill):
     def handle_all_light(self, message: Message):
         action_type = message.data.get('action')
         device_type = message.data.get('device')
-        expression_type = "gedaan"
         room_type = "alle"
         
         if device_type in ("licht", "verlichting"):
@@ -90,8 +87,8 @@ class LightSkill(OVOSSkill):
         if device_type in ("licht"):
             lid_type = "het"
         
-        self.speak_dialog('LightOffOn',
-                {'lid': lid_type, 'room': room_type, 'device': device_type, 'action': action_type, 'expression':expression_type})
+        self.speak_dialog('AllLight',
+                {'lid': lid_type, 'room': room_type, 'device': device_type, 'action': action_type})
         url = f"http://192.168.1.187/api/manager/logic/webhook/Demo/?tag=Light"+room_type+action_type
         data = requests.get(url)
         print(data.json())
@@ -101,15 +98,14 @@ class LightSkill(OVOSSkill):
         room_type = message.data.get('room')
         device_type = message.data.get('device')
         action_type = " "
-        expression_type = "aangepast"
 
         if device_type in ("lamp", "lampen", "lichten", "verlichting"):
             lid_type = "de"
         if device_type in ("licht"):
             lid_type = "het"
 
-        self.speak_dialog('LightOffOn',
-                {'lid': lid_type, 'room': room_type, 'device': device_type, 'action': action_type, 'expression':expression_type})
+        self.speak_dialog('ToggleLight',
+                {'lid': lid_type, 'room': room_type, 'device': device_type})
         url = f"http://192.168.1.187/api/manager/logic/webhook/Demo/?tag=Light"+room_type+action_type
         data = requests.get(url)
         print(data.json())
