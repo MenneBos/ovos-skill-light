@@ -179,14 +179,14 @@ class LightSkill(OVOSSkill):
         if scene_type in ('open'):   
             self.speak_dialog('OpenLight',
                     {'scene': scene_type})
+        if scene_type in ('wakker'):
+            self.speak_dialog('WakeupLight',
+                    {'scene': scene_type})
         
         
         url = f"http://192.168.1.187/api/manager/logic/webhook/Scene/?tag="+scene_type
         data = requests.get(url)
         LOG.info(f"the URL response in json {data}")
-
-        self.speak_dialog('SceneLight',
-                    {'scene': scene_type})
 
 def create_skill():
     return LightSkill()
