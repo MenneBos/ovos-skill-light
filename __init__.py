@@ -137,11 +137,11 @@ class LightSkill(OVOSSkill):
                 device_type = "lichten"
             if device_type in ("lamp"):
                 device_type = "lampen"
-            self.speak_dialog('AllColorLight',
-                    {'room': room_type, 'device': device_type, 'action': action_type, 'dim': moreless_type})
+            self.speak_dialog('AllDimLight',
+                    {'room': room_type, 'device': device_type, 'moreless': moreless_type})
         else:
-            self.speak_dialog('ColorLight',
-                    {'lid': lid_type, 'room': room_type, 'device': device_type, 'action': action_type, 'moreless': moreless_type})    
+            self.speak_dialog('DimLight',
+                    {'lid': lid_type, 'room': room_type, 'device': device_type, 'moreless': moreless_type})    
 
         url = f"http://192.168.1.187/api/manager/logic/webhook/Demo/?tag=Dim"+room_type+moreless_type
         data = requests.get(url)
