@@ -55,7 +55,7 @@ class LightSkill(OVOSSkill):
         """
         return self.settings.get("log_level", "INFO")
 
-    @intent_handler(IntentBuilder('light.switch').require('device').optionally('room').optionally('action'))
+    @intent_handler(IntentBuilder('light.intent').require('device').one_of('room', 'action'))
     def handle_room_light(self, message: Message):
         room_type = message.data.get('room', "alle")
         device_type = message.data.get('device')
