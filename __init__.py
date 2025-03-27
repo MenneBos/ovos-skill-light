@@ -55,15 +55,15 @@ class LightSkill(OVOSSkill):
         """
         return self.settings.get("log_level", "INFO")
 
-    @intent_handler(IntentBuilder('light.intent').require('device').optionally('room').optionally('action'))
+    @intent_handler(IntentBuilder('light.intent').require('device').optionally('room').optionally('action').optionally('kleur'))
     def handle_room_light(self, message: Message):
         room_type = message.data.get('room', "alle")
         device_type = message.data.get('device')
         action_type = message.data.get('action', "aangepast")
+        kleur_type = message.data.get('kleur', "warm wit")
 
         LOG.info(f"The room {room_type} and device {device_type} and action {action_type}.")
-
-        
+       
         if device_type in ("lamp", "lampen", "lichten", "verlichting"):
             lid_type = "de"
         if device_type in ("licht"):
@@ -90,8 +90,63 @@ class LightSkill(OVOSSkill):
         data = requests.get(url)
         LOG.info(f"the URL response in json {data}")
 
+    @intent_handler(IntentBuilder('LightColor.intent').require('device').require('action').require('color').optionally('room'))
+    def handle_color_light(self, message: Message):
+        room_type = message.data.get('room', "alle")
+        device_type = message.data.get('device')
+        action_type = message.data.get('action')
+        color_type = message.data.get('color')
 
-    #url = f"http://192.168.1.45/api/manager/logic/webhook/Terre/?tag=Light"
+        LOG.info(f"The room {room_type} and device {device_type} and action {action_type} and color {color_type}.")
+
+        if device_type in ("lamp", "lampen", "lichten", "verlichting"):
+            lid_type = "de"
+        if device_type in ("licht"):
+            lid_type = "het"
+
+        if room_type is "alle":
+            if device_type in ("licht", "verlichting"):
+                device_type = "lichten"
+            if device_type in ("lamp"):
+                device_type = "lampen"
+            self.speak_dialog('AllColorLight',
+                    {'room': room_type, 'device': device_type, 'action': action_type, 'color': color_type})
+        else:
+            self.speak_dialog('ColorLight',
+                    {'lid': lid_type, 'room': room_type, 'device': device_type, 'action': action_type, 'color': color_type})    
+
+        url = f"http://192.168.1.187/api/manager/logic/webhook/Demo/?tag=Color"+room_type+color_type
+        data = requests.get(url)
+        LOG.info(f"the URL response in json {data}")
+
+    @intent_handler(IntentBuilder('LightDim.intent').require('device').require('action').require('moreless').optionally('room'))
+    def handle_dim_light(self, message: Message):
+        room_type = message.data.get('room', "alle")
+        device_type = message.data.get('device')
+        action_type = message.data.get('action')
+        moreless_type = message.data.get('moreless')
+
+        LOG.info(f"The room {room_type} and device {device_type} and action {action_type} and dim {moreless_type}.")
+
+        if device_type in ("lamp", "lampen", "lichten", "verlichting"):
+            lid_type = "de"
+        if device_type in ("licht"):
+            lid_type = "het"
+
+        if room_type is "alle":
+            if device_type in ("licht", "verlichting"):
+                device_type = "lichten"
+            if device_type in ("lamp"):
+                device_type = "lampen"
+            self.speak_dialog('AllColorLight',
+                    {'room': room_type, 'device': device_type, 'action': action_type, 'dim': moreless_type})
+        else:
+            self.speak_dialog('ColorLight',
+                    {'lid': lid_type, 'room': room_type, 'device': device_type, 'moreless': moreless_type})    
+
+        url = f"http://192.168.1.187/api/manager/logic/webhook/Demo/?tag=Dim"+room_type+moreless_type
+        data = requests.get(url)
+        LOG.info(f"the URL response in json {data}")
 
 def create_skill():
     return LightSkill()
