@@ -1,4 +1,1 @@
 zet {room} {device} {action}
-zet {device} in {room} {action}
-zet {room} {action}
-zet {device} {action}

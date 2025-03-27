@@ -79,9 +79,10 @@ setup(
     packages=[SKILL_PKG],
     # package_data={SKILL_PKG: find_resource_files()},
     package_data={SKILL_PKG: [
-            "locale/nl-NL/*.entity",
-            "locale/nl-NL/*.intent",
+            #"locale/nl-NL/*.entity",
+            #"locale/nl-NL/*.intent",
             "locale/nl-NL/*.dialog"
+            "locale/nl-NL/*.voc",
         ]
     },
     include_package_data=True,

@@ -38,9 +38,9 @@ class LightSkill(OVOSSkill):
         self.add_event('mycroft.room.play', self.handle_room_light)
         #self.add_event('mycroft.all.play', self.handle_all_light)
         #self.add_event('mycroft.toggle.play', self.handle_toggle_light)
-        self.register_entity_file('room.entity')
-        self.register_entity_file('action.entity')
-        self.register_entity_file('device.entity')
+        #self.register_entity_file('room.entity')
+        #self.register_entity_file('action.entity')
+        #self.register_entity_file('device.entity')
         #self.register_entity_file('lid.entity')
     
     def on_settings_changed(self):
@@ -55,10 +55,10 @@ class LightSkill(OVOSSkill):
         """
         return self.settings.get("log_level", "INFO")
 
-    @intent_handler("RoomLight.intent")
+    @intent_handler(IntentBuilder('light.switch').require('device').optionally('room').optionally('action'))
     def handle_room_light(self, message: Message):
         room_type = message.data.get('room', "alle")
-        device_type = message.data.get('device', None)
+        device_type = message.data.get('device')
         action_type = message.data.get('action', "aangepast")
 
         LOG.info(f"The room {room_type} and device {device_type} and action {action_type}.")
