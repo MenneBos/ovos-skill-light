@@ -55,7 +55,7 @@ class LightSkill(OVOSSkill):
         """
         return self.settings.get("log_level", "INFO")
 
-    @intent_handler(IntentBuilder('light.intent').require('device').one_of('room', 'action'))
+    @intent_handler(IntentBuilder('light.intent').require('device').optionally('room').optionally('action'))
     def handle_room_light(self, message: Message):
         room_type = message.data.get('room', "alle")
         device_type = message.data.get('device')
@@ -69,14 +69,19 @@ class LightSkill(OVOSSkill):
         if device_type in ("licht"):
             lid_type = "het"
 
+        # woonkamer specific and on/off switch
         if room_type is not "alle" and action_type is not "aangepast":
             self.speak_dialog('RoomLight',
                     {'lid': lid_type, 'room': room_type, 'device': device_type, 'action': action_type})
-        
+        # all rooms on/off switch       
         if room_type is "alle":
+            if device_type in ("licht", "verlichting"):
+                device_type = "lichten"
+            if device_type in ("lamp"):
+                device_type = "lampen"
             self.speak_dialog('AllLight',
                     {'room': room_type, 'device': device_type, 'action': action_type})
-        
+        # woonkamer specific toggle switch        
         if action_type is "aangepast":
             self.speak_dialog('ToggleLight',
                     {'lid': lid_type, 'room': room_type, 'device': device_type})
