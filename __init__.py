@@ -35,9 +35,9 @@ class LightSkill(OVOSSkill):
     def initialize(self):
         self.settings.merge(DEFAULT_SETTINGS, new_only=True)
         self.settings_change_callback = self.on_settings_changed
-        self.add_event('mycroft.room.play', self.handle_room_light)
-        #self.add_event('mycroft.all.play', self.handle_all_light)
-        #self.add_event('mycroft.toggle.play', self.handle_toggle_light)
+        self.add_event('mycroft.light.play', self.handle_room_light)
+        self.add_event('mycroft.color.play', self.handle_color_light)
+        self.add_event('mycroft.dim.play', self.handle_dim_light)
         #self.register_entity_file('room.entity')
         #self.register_entity_file('action.entity')
         #self.register_entity_file('device.entity')
@@ -62,7 +62,17 @@ class LightSkill(OVOSSkill):
         action_type = message.data.get('action', "aangepast")
 
         LOG.info(f"The room {room_type} and device {device_type} and action {action_type}.")
-       
+    
+        # all rooms on/off switch       
+        if room_type is "alle":
+            if device_type in ("licht", "verlichting"):
+                device_type = "lichten"
+            if device_type in ("lamp"):
+                device_type = "lampen"
+            self.speak_dialog('AllLight',
+                    {'room': room_type, 'device': device_type, 'action': action_type})
+
+        # create the right lid and device name for dialog
         if device_type in ("lamp", "lampen", "lichten", "verlichting"):
             lid_type = "de"
         if device_type in ("licht"):
@@ -72,14 +82,7 @@ class LightSkill(OVOSSkill):
         if room_type is not "alle" and action_type is not "aangepast":
             self.speak_dialog('RoomLight',
                     {'lid': lid_type, 'room': room_type, 'device': device_type, 'action': action_type})
-        # all rooms on/off switch       
-        if room_type is "alle":
-            if device_type in ("licht", "verlichting"):
-                device_type = "lichten"
-            if device_type in ("lamp"):
-                device_type = "lampen"
-            self.speak_dialog('AllLight',
-                    {'room': room_type, 'device': device_type, 'action': action_type})
+
         # woonkamer specific toggle switch        
         if action_type is "aangepast":
             self.speak_dialog('ToggleLight',
@@ -98,11 +101,6 @@ class LightSkill(OVOSSkill):
 
         LOG.info(f"The room {room_type} and device {device_type} and action {action_type} and color {color_type}.")
 
-        if device_type in ("lamp", "lampen", "lichten", "verlichting"):
-            lid_type = "de"
-        if device_type in ("licht"):
-            lid_type = "het"
-
         if room_type is "alle":
             if device_type in ("licht", "verlichting"):
                 device_type = "lichten"
@@ -111,6 +109,10 @@ class LightSkill(OVOSSkill):
             self.speak_dialog('AllColorLight',
                     {'room': room_type, 'device': device_type, 'action': action_type, 'color': color_type})
         else:
+            if device_type in ("lamp", "lampen", "lichten", "verlichting"):
+                lid_type = "de"
+            if device_type in ("licht"):
+                lid_type = "het"
             self.speak_dialog('ColorLight',
                     {'lid': lid_type, 'room': room_type, 'device': device_type, 'action': action_type, 'color': color_type})    
 
@@ -127,11 +129,6 @@ class LightSkill(OVOSSkill):
 
         LOG.info(f"The room {room_type} and device {device_type} and action {action_type} and dim {moreless_type}.")
 
-        if device_type in ("lamp", "lampen", "lichten", "verlichting"):
-            lid_type = "de"
-        if device_type in ("licht"):
-            lid_type = "het"
-
         if room_type is "alle":
             if device_type in ("licht", "verlichting"):
                 device_type = "lichten"
@@ -140,6 +137,10 @@ class LightSkill(OVOSSkill):
             self.speak_dialog('AllDimLight',
                     {'room': room_type, 'device': device_type, 'moreless': moreless_type})
         else:
+            if device_type in ("lamp", "lampen", "lichten", "verlichting"):
+                lid_type = "de"
+            if device_type in ("licht"):
+                lid_type = "het"
             self.speak_dialog('DimLight',
                     {'lid': lid_type, 'room': room_type, 'device': device_type, 'moreless': moreless_type})    
 
