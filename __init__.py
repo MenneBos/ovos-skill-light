@@ -38,6 +38,7 @@ class LightSkill(OVOSSkill):
         self.add_event('mycroft.light.play', self.handle_room_light)
         self.add_event('mycroft.color.play', self.handle_color_light)
         self.add_event('mycroft.dim.play', self.handle_dim_light)
+        self.add_event('mycroft.scene.play', self.handle_scene_light)
         #self.register_entity_file('room.entity')
         #self.register_entity_file('action.entity')
         #self.register_entity_file('device.entity')
@@ -147,6 +148,45 @@ class LightSkill(OVOSSkill):
         url = f"http://192.168.1.187/api/manager/logic/webhook/Demo/?tag=Dim"+room_type+moreless_type
         data = requests.get(url)
         LOG.info(f"the URL response in json {data}")
+
+    @intent_handler(IntentBuilder('Lightscene.intent').require('scene'))
+    def handle_scene_light(self, message: Message):
+        scene_type = message.data.get('scene')
+
+        LOG.info(f"The scene {scene_type}.")
+
+        if scene_type in ("gezellig", "sfeer", "romantisch"):
+            self.speak_dialog('RomanticLight',
+                    {'scene': scene_type})
+        if scene_type in ("werk", 'taak', "studie"):
+            self.speak_dialog('TaskLight',
+                    {'scene': scene_type})
+        if scene_type in ("normaal"):   
+            self.speak_dialog('NormalLight',
+                    {'scene': scene_type})
+        if scene_type in ("feest", "feestelijk"):
+            self.speak_dialog('PartyLight',
+                    {'scene': scene_type})
+        if scene_type in ("slapen", "slaap"):
+            self.speak_dialog('SleepLight',
+                    {'scene': scene_type})
+        if scene_type in ("ochtend"):   
+            self.speak_dialog('MorningLight',
+                    {'scene': scene_type})
+        if scene_type in ('afsluiten'):
+            self.speak_dialog('CloseLight',
+                    {'scene': scene_type})
+        if scene_type in ('open'):   
+            self.speak_dialog('OpenLight',
+                    {'scene': scene_type})
+        
+        
+        url = f"http://192.168.1.187/api/manager/logic/webhook/Scene/?tag="+scene_type
+        data = requests.get(url)
+        LOG.info(f"the URL response in json {data}")
+
+        self.speak_dialog('SceneLight',
+                    {'scene': scene_type})
 
 def create_skill():
     return LightSkill()
