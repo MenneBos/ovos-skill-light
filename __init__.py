@@ -141,7 +141,7 @@ class LightSkill(OVOSSkill):
                     {'room': room_type, 'device': device_type, 'action': action_type, 'dim': moreless_type})
         else:
             self.speak_dialog('ColorLight',
-                    {'lid': lid_type, 'room': room_type, 'device': device_type, 'moreless': moreless_type})    
+                    {'lid': lid_type, 'room': room_type, 'device': device_type, 'action': action_type, 'moreless': moreless_type})    
 
         url = f"http://192.168.1.187/api/manager/logic/webhook/Demo/?tag=Dim"+room_type+moreless_type
         data = requests.get(url)
