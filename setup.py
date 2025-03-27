@@ -51,7 +51,7 @@ def get_version():
     
 
 def find_resource_files():
-    resource_base_dirs = ("locale", "soundbytes", "ui", "vocab", "nl-NL", "dialog", "intent", "entity", "regex", "skill")
+    resource_base_dirs = ("locale", "soundbytes")
     base_dir = path.dirname(__file__)
     package_data = ["*.json"]
     for res in resource_base_dirs:
@@ -77,14 +77,7 @@ setup(
     #    packages=find_packages(include=['locale','soundbytes']),
     package_dir={SKILL_PKG: ""},
     packages=[SKILL_PKG],
-    # package_data={SKILL_PKG: find_resource_files()},
-    package_data={SKILL_PKG: [
-            #"locale/nl-NL/*.entity",
-            #"locale/nl-NL/*.intent",
-            "locale/nl-NL/*.dialog"
-            "locale/nl-NL/*.voc",
-        ]
-    },
+    package_data={SKILL_PKG: find_resource_files()},
     include_package_data=True,
     keywords='ovos skill plugin',
     entry_points={'ovos.plugin.skill': PLUGIN_ENTRY_POINT}
