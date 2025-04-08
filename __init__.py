@@ -158,32 +158,40 @@ class LightSkill(OVOSSkill):
         if scene_type in ("gezellig", "romantisch"):
             self.speak_dialog('RomanticLight',
                     {'scene': "romantisch"})
+            scene_type = "romantisch"
         if scene_type in ("werken", "studeren", "taak"):
             self.speak_dialog('TaskLight',
                     {'scene': "werken"})
+            scene_type = "werken"
         if scene_type in ("feest", "feestelijk", "feesten"):
             self.speak_dialog('PartyLight',
                     {'scene': "feest"})
+            scene_type = "feest"
         if scene_type in ("slapen", "welterusten"):
             self.speak_dialog('SleepLight',
                     {'scene': "slapen"})
+            scene_type = "slapen"
         if scene_type in ("ochtend"):   
             self.speak_dialog('MorningLight',
                     {'scene': "ochtend"})
+            scene_type = "ochtend"
         if scene_type in ('afsluiten'):
             self.speak_dialog('CloseLight',
                     {'scene': "afsluiten"})
+            scene_type = "afsluiten"
         if scene_type in ('wakker', 'goedemorgen'):
             self.speak_dialog('WakeupLight',
                     {'scene': "wakker"})
+            scene_type = "wakker"
         if scene_type in ("relaxen", "ontspannen", "avond"):
             self.speak_dialog('relaxLight',
-                    {'scene': "relax"})
+                    {'scene': "rust"})
+            scene_type = "relax"
         
         
-        url = f"http://192.168.1.187/api/manager/logic/webhook/Scene/?tag="+scene_type
+        url = f"http://192.168.1.187/api/manager/logic/webhook/Scene/?tag="+scene
         data = requests.get(url)
-        LOG.info(f"HOMEY a scene flow will be started due to the URL response in json {data}")
+        LOG.info(f"HOMEY a scene flow will be started with {due to the URL response in json {data}")
 
 def create_skill():
     return LightSkill()
