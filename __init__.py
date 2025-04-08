@@ -164,7 +164,7 @@ class LightSkill(OVOSSkill):
         if scene_type in ("feest", "feestelijk"):
             self.speak_dialog('PartyLight',
                     {'scene': scene_type})
-        if scene_type in ("slapen"):
+        if scene_type in ("slapen", "welterusten"):
             self.speak_dialog('SleepLight',
                     {'scene': scene_type})
         if scene_type in ("ochtend"):   
