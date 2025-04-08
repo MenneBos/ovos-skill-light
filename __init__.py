@@ -157,28 +157,28 @@ class LightSkill(OVOSSkill):
 
         if scene_type in ("gezellig", "romantisch"):
             self.speak_dialog('RomanticLight',
-                    {'scene': scene_type})
-        if scene_type in ("werken", "studeren"):
+                    {'scene': "romantisch"})
+        if scene_type in ("werken", "studeren", "taak"):
             self.speak_dialog('TaskLight',
-                    {'scene': scene_type})
+                    {'scene': "taak"})
         if scene_type in ("feest", "feestelijk"):
             self.speak_dialog('PartyLight',
-                    {'scene': scene_type})
+                    {'scene': "feestelijk"})
         if scene_type in ("slapen", "welterusten"):
             self.speak_dialog('SleepLight',
-                    {'scene': scene_type})
+                    {'scene': "slapen"})
         if scene_type in ("ochtend"):   
             self.speak_dialog('MorningLight',
-                    {'scene': scene_type})
+                    {'scene': "ochtend"})
         if scene_type in ('afsluiten'):
             self.speak_dialog('CloseLight',
-                    {'scene': scene_type})
-        if scene_type in ('wakker'):
+                    {'scene': "afsluiten"})
+        if scene_type in ('wakker', 'goedemorgen'):
             self.speak_dialog('WakeupLight',
-                    {'scene': scene_type})
+                    {'scene': "wakker"})
         if scene_type in ("relaxen", "ontspannen", "avond"):
             self.speak_dialog('relaxLight',
-                    {'scene': scene_type})
+                    {'scene': "normaal"})
         
         
         url = f"http://192.168.1.187/api/manager/logic/webhook/Scene/?tag="+scene_type
