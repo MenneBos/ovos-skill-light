@@ -56,13 +56,13 @@ class LightSkill(OVOSSkill):
         """
         return self.settings.get("log_level", "INFO")
 
-    @intent_handler(IntentBuilder('light.intent').require('device').optionally('room').optionally('action'))
+    @intent_handler(IntentBuilder('light.intent').require('device').optionally('verb').optionally('room').optionally('action'))
     def handle_room_light(self, message: Message):
         room_type = message.data.get('room', "alle")
         device_type = message.data.get('device')
         action_type = message.data.get('action', "aangepast")
 
-        LOG.info(f"The room {room_type} and device {device_type} and action {action_type}.")
+        LOG.info(f"HOMEY The room {room_type} and device {device_type} and action {action_type}.")
     
         # all rooms on/off switch       
         if room_type is "alle":
@@ -91,16 +91,16 @@ class LightSkill(OVOSSkill):
 
         url = f"http://192.168.1.187/api/manager/logic/webhook/Demo/?tag=Light"+room_type+action_type
         data = requests.get(url)
-        LOG.info(f"the URL response in json {data}")
+        LOG.info(f"HOMEY switch light flow will be initiated the URL response in json {data}")
 
-    @intent_handler(IntentBuilder('LightColor.intent').require('device').require('action').require('color').optionally('room'))
+    @intent_handler(IntentBuilder('LightColor.intent').require('device').require('action').require('color').optionally('verb').optionally('room'))
     def handle_color_light(self, message: Message):
         room_type = message.data.get('room', "alle")
         device_type = message.data.get('device')
         action_type = message.data.get('action')
         color_type = message.data.get('color')
 
-        LOG.info(f"The room {room_type} and device {device_type} and action {action_type} and color {color_type}.")
+        LOG.info(f"HOMEY The room {room_type} and device {device_type} and action {action_type} and color {color_type}.")
 
         if room_type is "alle":
             if device_type in ("licht", "verlichting"):
@@ -119,9 +119,9 @@ class LightSkill(OVOSSkill):
 
         url = f"http://192.168.1.187/api/manager/logic/webhook/Demo/?tag=Color"+room_type+color_type
         data = requests.get(url)
-        LOG.info(f"the URL response in json {data}")
+        LOG.info(f" HOMEY a color flow has started the URL response in json {data}")
 
-    @intent_handler(IntentBuilder('LightDim.intent').require('device').require('action').require('moreless').optionally('room'))
+    @intent_handler(IntentBuilder('LightDim.intent').require('device').require('action').require('moreless').optionally('verb').optionally('room'))
     def handle_dim_light(self, message: Message):
         room_type = message.data.get('room', "alle")
         device_type = message.data.get('device')
@@ -147,27 +147,24 @@ class LightSkill(OVOSSkill):
 
         url = f"http://192.168.1.187/api/manager/logic/webhook/Demo/?tag=Dim"+room_type+moreless_type
         data = requests.get(url)
-        LOG.info(f"the URL response in json {data}")
+        LOG.info(f"HOMEY a dim action is started the URL response in json {data}")
 
-    @intent_handler(IntentBuilder('Lightscene.intent').require('scene'))
+    @intent_handler(IntentBuilder('Lightscene.intent').require('scene').require('verb').require('person'))
     def handle_scene_light(self, message: Message):
         scene_type = message.data.get('scene')
 
         LOG.info(f"The scene {scene_type}.")
 
-        if scene_type in ("gezellig", "sfeer", "romantisch"):
+        if scene_type in ("gezellig", "romantisch"):
             self.speak_dialog('RomanticLight',
                     {'scene': scene_type})
-        if scene_type in ("werk", 'taak', "studie"):
+        if scene_type in ("werken", "studeren"):
             self.speak_dialog('TaskLight',
-                    {'scene': scene_type})
-        if scene_type in ("normaal"):   
-            self.speak_dialog('NormalLight',
                     {'scene': scene_type})
         if scene_type in ("feest", "feestelijk"):
             self.speak_dialog('PartyLight',
                     {'scene': scene_type})
-        if scene_type in ("slapen", "slaap"):
+        if scene_type in ("slapen"):
             self.speak_dialog('SleepLight',
                     {'scene': scene_type})
         if scene_type in ("ochtend"):   
@@ -176,17 +173,17 @@ class LightSkill(OVOSSkill):
         if scene_type in ('afsluiten'):
             self.speak_dialog('CloseLight',
                     {'scene': scene_type})
-        if scene_type in ('open'):   
-            self.speak_dialog('OpenLight',
-                    {'scene': scene_type})
         if scene_type in ('wakker'):
             self.speak_dialog('WakeupLight',
+                    {'scene': scene_type})
+        if scene_type in ("relaxen", "ontspannen", "avond"):
+            self.speak_dialog('relaxLight',
                     {'scene': scene_type})
         
         
         url = f"http://192.168.1.187/api/manager/logic/webhook/Scene/?tag="+scene_type
         data = requests.get(url)
-        LOG.info(f"the URL response in json {data}")
+        LOG.info(f"HOMEY a scene flow will be started due to the URL response in json {data}")
 
 def create_skill():
     return LightSkill()
