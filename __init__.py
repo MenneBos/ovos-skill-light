@@ -189,7 +189,7 @@ class LightSkill(OVOSSkill):
             scene_type = "relax"
         
         
-        url = f"http://192.168.1.187/api/manager/logic/webhook/Scene/?tag="+scene
+        url = f"http://192.168.1.187/api/manager/logic/webhook/Scene/?tag="+scene_type
         data = requests.get(url)
         LOG.info(f"HOMEY a scene flow will be started with {due to the URL response in json {data}")
 
